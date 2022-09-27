@@ -32,4 +32,14 @@ describe('Testing anime routes', () => {
             .expect(200)
             .expect('Content-Type', /json/)
      })
+
+     test('Deleted method: Should be a JSON and return http status code 200', async () => { 
+        request(app)
+            .delete('/anime/:id')
+            .type('json')
+            .set('Accept', 'application/json')
+            .send({animeName:true,description:true})
+            .expect(200)
+            .expect('Content-Type', /json/)
+     })
 })

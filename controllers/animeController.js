@@ -25,8 +25,23 @@ const animeController = {
                 if(infos[key]) infos[key] = req.body[key]
             })
             res.status(200).json(infos)
+        } else {
+            res.status(422).json({msg:'Request body invalid'})
+        }
+    },
+
+    deleteAnimeInfos: (req,res,next)=>{
+        const datas = Object.keys(req.body)
+        if(datas.length > 0) {
+            datas.forEach(key => {
+                if(infos[key]) delete infos[key] 
+            })
+            res.status(200).json(infos)
+        } else {
+            res.status(422).json({msg:'Request body invalid'})
         }
     }
+
 }
 
 module.exports = animeController

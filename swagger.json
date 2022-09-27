@@ -87,7 +87,40 @@
                     }
                 }
             }
-        }
+        },
+        "delete":{
+          "description":"Deletar uma informação nova na rota de animes",
+          "tags":["Rotas (endpoints)"],
+          "requestBody":{
+              "content":{
+                  "application/json": {
+                      "schema":{
+                          "type": "object",
+                          "example": {
+                            "animeName": true,
+                            "description":true
+                          }                                                 
+                      }
+                  }
+              }
+          },
+          "responses": {
+              "422":{
+                  "description": "Request body invalid"
+              },
+              "200": {
+                  "description": "OK",
+                  "content": {
+                      "application/json":{
+                          "schema":{
+                              "type": "object",
+                              "$ref": "#/components/schemas/Anime"
+                          }
+                      }
+                  }
+              }
+          }
+      }
         },
         "/characters": {
             "get":{
