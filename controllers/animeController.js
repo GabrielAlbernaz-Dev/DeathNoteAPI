@@ -1,44 +1,60 @@
-const {getAnimeInfo} = require('../utils/anime/getAnimeInfo')
-const infos = getAnimeInfo()
+//Model
+const Anime = require('../models/Anime');
+
 
 const animeController = {
-    getAnimeInfos: (req,res,next)=>{
-        res.json(infos)
-    },
-
-    insertAnimeInfos: (req,res,next)=>{
-        const datas = Object.keys(req.body || [])
-        if(datas.length > 0) {
-            datas.forEach(key => {
-                infos[key] = req.body[key]
-            })
-            res.status(200).json(infos)
-        } else {
-            res.status(422).json({msg:'Request body invalid'})
+    getAnimeInfos: async (req, res) => {
+        try {
+            const animeInfo = await Anime.find();
+            res.status(200).json(animeInfo);
+    
+        } catch (error) {
+            res.status(404).json({error:'An error occurred while accessing the anime list!'});
         }
     },
 
-    editAnimeInfos: (req,res,next)=>{
-        const datas = Object.keys(req.body)
-        if(datas.length > 0) {
-            datas.forEach(key => {
-                if(infos[key]) infos[key] = req.body[key]
-            })
-            res.status(200).json(infos)
-        } else {
-            res.status(422).json({msg:'Request body invalid'})
+    insertAnimeInfos: async (req,res,next)=>{
+        const {animeName,description,genres,productionInfos} = req.body;
+        const animeInfos = {
+            animeName,
+            description,
+            genres,
+            productionInfos
+        }
+
+        try {
+            await Anime.create(animeInfos);
+            res.status(201).json({message: 'Anime Infos Post was successfully created'})
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({error:'Passed data is empty or incorrect, please check and try again'});
         }
     },
 
-    deleteAnimeInfos: (req,res,next)=>{
-        const datas = Object.keys(req.body)
-        if(datas.length > 0) {
-            datas.forEach(key => {
-                if(infos[key]) delete infos[key] 
-            })
-            res.status(200).json(infos)
-        } else {
-            res.status(422).json({msg:'Request body invalid'})
+    editAnimeInfos: async (req, res, next) => {
+        const {animeName,description,genres,productionInfos} = req.body;
+        const animeInfos = {
+            animeName,
+            description,
+            genres,
+            productionInfos
+        }
+    
+        try {
+            const updatedAnimeInfos = await Anime.updateMany({},animeInfos);
+            if(updatedAnimeInfos.matchedCount === 0) res.json({error:'Anime cannot be updated, because body was empty'});
+            res.status(200).json(animeInfos);
+        } catch (error) {
+            res.status(500).json({error:'An error occurred when changing anime info data, check your boy request'});
+        }
+    },
+
+    deleteAnimeInfos: async (req, res) => {
+        try {
+            await Anime.deleteMany({});
+            res.status(200).json({msg:'Anime Info was deleted successfully'});
+        } catch (error) {
+            res.status(500).json({msg:'Anime Info not found or id is invalid'});
         }
     }
 

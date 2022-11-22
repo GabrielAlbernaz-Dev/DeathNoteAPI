@@ -2,19 +2,25 @@ const express = require('express');
 const router = express.Router();
 const {getCharacters,getCharacter,insertCharacter,editCharacter,deleteCharacter} = require('../controllers/charactersController');
 
-/* GET All Characters */
-router.get('/', getCharacters);
+//Model
+const Character = require('../models/Character');
 
-/* GET specific Character */
-router.get('/:id', getCharacter);
+// Validate
+const {tokenValidate} = require('../utils/tokenValidate');
 
-/* Post a Characters */
-router.post('/', insertCharacter);
+/* Read All Characters */
+router.get('/',tokenValidate,getCharacters);
 
-/* Put a Character */
-router.put('/:id', editCharacter);
+/* Read specific Character */
+router.get('/:id',tokenValidate, getCharacter);
+
+/* Create a Characters */
+router.post('/',tokenValidate, insertCharacter);
+
+/* Edit a Character */
+router.patch('/:id',tokenValidate, editCharacter);
 
 /* Delete a Character */
-router.delete('/:id', deleteCharacter);
+router.delete('/:id',tokenValidate, deleteCharacter);
 
 module.exports = router;

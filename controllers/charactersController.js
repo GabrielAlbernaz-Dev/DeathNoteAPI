@@ -1,68 +1,82 @@
-const {getCharacters} = require('../utils/characters/getCharacters')
-const {findCharacter} = require('../utils/characters/findCharacter')
-const {findCharacterIndex} = require('../utils/characters/findCharacterIndex')
-const {getCharactersMains} = require('../utils/characters/getCharactersMains')
-
-const characters = getCharacters()
-
-const jsonCharacters = {
-    count:characters.length,
-    results: characters
-}
+//Model
+const Character = require('../models/Character');
 
 const charactersController = {
-    getCharacters : (req,res,next)=> {
-        res.json(jsonCharacters)
+    getCharacters : async (req, res) => {
+        try {
+            const characters = await Character.find();
+            const length = Array.from(await Character.find()).length
+            res.status(200).json({count:length,results:characters});
+    
+        } catch (err) {
+            res.status(404).json({error:'An error occurred while accessing the character list!'});
+        }
     }, 
 
-    getCharacter : (req,res,next)=> {
-        const {id} = req.params
-        const characterFound = findCharacter(characters,id)
-        if(!characterFound) return res.status(404).json({msg:'Character not found'})
-        res.status(200).json(characterFound)
+    getCharacter : async (req, res, next) => {
+        const id = req.params.id;
+        try {
+            const character = await Character.findById(id);
+            res.status(200).json(character);
+        } catch (err) {
+            res.status(422).json({error:'The character does not exist in our data storage'});
+        }
     }, 
 
-    insertCharacter : (req,res,next)=> {
-        const {name,description,infos} = req.body
-        const requiredExpression = !name || !description || !infos 
-        if(requiredExpression) return res.status(422).json({msg:'Request body invalid'})
-        const charactersMains = getCharactersMains()
-        characters.push({
-            id:characters.length + 1,
-            name:name,
-            url:`localhost:3000/characters/${characters.length + 1}`,
-            description:description,
-            mainCharacter: charactersMains.some((character) => character === name),
-            infos:infos,
-        })
-        res.status(200).json(characters)
+    insertCharacter : async (req,res,next)=>{
+        const {name,url,description,mainCharacter,infos} = req.body;
+        const length = Array.from(await Character.find()).length
+        const fullUrl = new URL(`${req.protocol}://${req.get('host')}${req.originalUrl}`);
+        const character = {
+            name,
+            url: `${fullUrl.href}/${length}`,
+            description,
+            mainCharacter,
+            infos
+        }
+    
+        try {
+            await Character.create(character);
+            res.status(201).json({message: 'Character Post was successfully created'})
+        } catch (err) {
+            res.status(500).json({error:'Passed data is empty or incorrect, please check and try again'});
+        }
     },
 
-    editCharacter : (req,res,next)=> {
-        const {id} = req.params
-        const {name,description,infos} = req.body
-        const requiredExpression = name && description && infos
-        const characterFound = findCharacter(characters,id)
-        if(!characterFound) return res.status(404).json({msg:'Character not found'})
-        else if(requiredExpression) {
-            characterFound.name = name
-            characterFound.description = description
-            characterFound.infos = infos
+    editCharacter : async (req, res, next) => {
+        const id = req.params.id;
+        const {name,description,mainCharacter,infos} = req.body;
+        const character = {
+            name,
+            description,
+            mainCharacter,
+            infos
         }
-        else if(name) characterFound.name = name
-        else if(description) characterFound.description = description
-        else if(infos && physics && personals && eyeColor && hairColor && specie && age && country && occupation) characterFound.infos = infos
-        else return res.status(404).json({msg:'Invalid data please see api documentation'})
-
-        res.status(200).json(characterFound)
+    
+        try {
+            const updatedCharacter = await Character.updateOne({_id: id},character);
+            if(updatedCharacter.matchedCount === 0) res.json({error:'Character cannot be updated, because body was empty'});
+            res.status(200).json(character);
+        } catch (err) {
+            res.status(500).json({error:'An error occurred when changing character data, check your boy request'});
+        }
     }, 
 
-    deleteCharacter : (req,res,next)=> {
-        const {id} = req.params
-        const characterFound = findCharacterIndex(characters,id)
-        if(characterFound === -1) return res.status(404).json({msg:'Delete was failed'})
-        characters.splice(characterFound, 1)
-        res.status(200).json(characters)
+    deleteCharacter : async (req, res) => {
+        const id = req.params.id;
+        const character = await Character.findOne({id: id});
+        if(!character) {
+            res.status(422).json({msg:'Character not found or id is invalid'});
+            return
+        }
+    
+        try {
+            await Character.deleteOne();
+            res.status(200).json({msg:'Character deleted successfully'});
+        } catch (err) {
+            res.status(500).json({msg:'Character not found or id is invalid'});
+        }
+    
     }
 
 

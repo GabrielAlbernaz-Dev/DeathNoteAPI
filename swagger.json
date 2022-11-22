@@ -209,7 +209,7 @@
                     }
                 }
             },
-            "put": {
+            "patch": {
                 "description":"Alterar um personagem presente na lista de personagens",
                 "tags":["Rotas (endpoints)"],
                 "parameters": [
@@ -287,7 +287,173 @@
                     }
                 }
             }
-        }
+        },
+        "/organizations": {
+          "get":{
+              "description":"Ao acessar essa rota, você obterá os dados de todos as organizações presentes no anime, o formato desses dados será um JSON, igual no exemplo abaixo:",
+              "tags":["Rotas (endpoints)"],
+              "responses": {
+                  "404":{
+                      "description": "Data not found"
+                  },
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "application/json":{
+                              "schema":{
+                                  "type": "object",
+                                  "$ref": "#/components/schemas/Characters"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post":{
+              "description":"Inserir um personagem novo na lista de personagens",
+              "tags":["Rotas (endpoints)"],
+              "requestBody":{
+                  "content":{
+                      "application/json": {
+                          "schema":{
+                              "$ref": "#/components/schemas/CharacterBodyRequest"
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "422":{
+                      "description": "Request body invalid"
+                  },
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "application/json":{
+                              "schema":{
+                                  "type": "object",
+                                  "$ref": "#/components/schemas/Characters"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/organizations/{id}":{
+          "get":{
+              "description":"Ao acessar essa rota, você obterá os dado da organização a partir do ID colocado no path, o formato desses dados será um JSON, igual no exemplo abaixo:",
+              "tags":["Rotas (endpoints)"],
+              "parameters": [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID do personagem",
+                    "required": true,
+                    "schema": {
+                      "type": "string",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "style": "simple"
+                  }
+                ],
+              "responses": {
+                  "404":{
+                      "description": "Data not found"
+                  },
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "application/json":{
+                              "schema":{
+                                  "type": "object",
+                                  "$ref": "#/components/schemas/Character"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "patch": {
+              "description":"Alterar uma organização presente na lista",
+              "tags":["Rotas (endpoints)"],
+              "parameters": [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID da organização",
+                    "required": true,
+                    "schema": {
+                      "type": "string",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "style": "simple"
+                  }
+                ],
+              "requestBody":{
+                  "content":{
+                      "application/json": {
+                          "schema":{
+                              "type":"object",
+                              "$ref": "#/components/schemas/CharacterBodyRequest"
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "422":{
+                      "description": "Request body invalid"
+                  },
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "application/json":{
+                              "schema":{
+                                  "$ref": "#/components/schemas/Organization"
+                              }
+                          } 
+                      }
+                  }
+              }
+          },
+          "delete":{
+              "description":"Deletar um personagem presente na lista de personagens",
+              "tags":["Rotas (endpoints)"],
+              "parameters": [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID do personagem",
+                    "required": true,
+                    "schema": {
+                      "type": "string",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "style": "simple"
+                  }
+                ],
+              "responses": {
+                  "404":{
+                      "description": "Character not found"
+                  },
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "application/json":{
+                              "schema":{
+                                  "$ref": "#/components/schemas/Characters"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
     },
     "components":{
         "schemas":{
@@ -861,6 +1027,16 @@
                         "type": "array"
                     }
                 }
+            },
+            "Organization": {
+              "type": "object",
+              "example":{
+                "id":1,
+                "name":"Armed Forces",
+                "url": "localhost:3000/organizations/1",
+                "description": "It is the main investigative group for the Kira case, and they are led by the world's greatest detective, L, who preferred to be called Ryuzaki by the investigators. It was founded after the Interpol meeting with the countries of the world and after L proved that Kira is in Japan.",
+                "members":["Ryuzaki","Light","Aizawa"]
+              }
             }
         }
     }

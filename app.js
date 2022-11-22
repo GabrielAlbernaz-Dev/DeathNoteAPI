@@ -1,14 +1,26 @@
 const express = require('express');
 const path = require('path');
+
+// Utils
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+
+//Docs
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
+//Routes
 const indexRouter = require('./routes/index')
 const animeRouter = require('./routes/anime');
 const charactersRouter = require('./routes/characters');
+const organizationsRouter = require('./routes/organizations');
+const authRouter = require('./routes/auth');
+
+// Database
+const uri = "mongodb+srv://p0nzu:albernaz123@deathnoteapi-cluster.9x7n484.mongodb.net/deathnoteapi?retryWrites=true&w=majority";
+const mongoose = require('mongoose');
+
 
 const swaggerOptions = {
     customCss: `
@@ -39,6 +51,22 @@ app.use(cookieParser());
 app.use('/',indexRouter)
 app.use('/anime',animeRouter);
 app.use('/characters', charactersRouter);
+app.use('/organizations', organizationsRouter);
+app.use('/auth', authRouter);
+
+// Mongoose
+mongoose
+    .connect(uri)
+    .then(()=>{
+        console.log('Mongoose connected');
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+
+// API Auth
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 
 module.exports = app;
