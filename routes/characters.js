@@ -6,7 +6,7 @@ const {getCharacters,getCharacter,insertCharacter,editCharacter,deleteCharacter}
 const Character = require('../models/Character');
 
 // Validate
-const {tokenValidate} = require('../utils/tokenValidate');
+const {tokenValidate} = require('../middlewares/authMiddleware');
 
 /* Read All Characters */
 router.get('/',tokenValidate,getCharacters);

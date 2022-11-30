@@ -1,7 +1,6 @@
 //Model
 const Anime = require('../models/Anime');
 
-
 const animeController = {
     getAnimeInfos: async (req, res) => {
         try {

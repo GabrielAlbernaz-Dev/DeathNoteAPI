@@ -3,7 +3,7 @@ const router = express.Router();
 const {getAnimeInfos,insertAnimeInfos,editAnimeInfos,deleteAnimeInfos} = require('../controllers/animeController');
 
 // Validate
-const {tokenValidate} = require('../utils/tokenValidate');
+const {tokenValidate} = require('../middlewares/authMiddleware');
 
 /* GET anime infos*/
 router.get('/',tokenValidate, getAnimeInfos)

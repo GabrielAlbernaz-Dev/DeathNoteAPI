@@ -3,7 +3,7 @@ const router = express.Router();
 const {getOrganizations,getOrganization,insertOrganization,editOrganization,deleteOrganization} = require('../controllers/organizationController');
 
 // Validate
-const {tokenValidate} = require('../utils/tokenValidate');
+const {tokenValidate} = require('../middlewares/authMiddleware');
 
 /* Read All Organizations */
 router.get('/',tokenValidate, getOrganizations);

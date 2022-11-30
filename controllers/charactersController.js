@@ -25,7 +25,7 @@ const charactersController = {
 
     insertCharacter : async (req,res,next)=>{
         const {name,url,description,mainCharacter,infos} = req.body;
-        const length = Array.from(await Character.find()).length
+        const length = Array.from(await Character.find()).length + 1
         const fullUrl = new URL(`${req.protocol}://${req.get('host')}${req.originalUrl}`);
         const character = {
             name,

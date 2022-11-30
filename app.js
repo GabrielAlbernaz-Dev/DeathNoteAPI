@@ -15,6 +15,7 @@ const indexRouter = require('./routes/index')
 const animeRouter = require('./routes/anime');
 const charactersRouter = require('./routes/characters');
 const organizationsRouter = require('./routes/organizations');
+const placesRouter = require('./routes/places');
 const authRouter = require('./routes/auth');
 
 // Database
@@ -52,6 +53,7 @@ app.use('/',indexRouter)
 app.use('/anime',animeRouter);
 app.use('/characters', charactersRouter);
 app.use('/organizations', organizationsRouter);
+app.use('/places', placesRouter);
 app.use('/auth', authRouter);
 
 // Mongoose
@@ -63,10 +65,5 @@ mongoose
     .catch((err)=>{
         console.log(err);
     })
-
-// API Auth
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
 
 module.exports = app;

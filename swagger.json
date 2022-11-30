@@ -1,53 +1,24 @@
 {
-    "openapi":"3.0.0",
-    "info":{
-        "title":"Death Note API",
-        "description":"O DeathNoteAPI fornece acesso rápido e poderoso a diversas informações do anime Death Note incluindo dados de personagens, sobre o anime, fatos, locais e muito mais. Ela é caracterizada como uma API REST possuindo rotas(endpoints) para a consulta de informações e notícias, alteração de dados, exclusão de blogs e etc."
-    },
-    "version":"1.0.0",
-    "paths": {
-        "/anime":{
-            "get": {
-                "description":"Ao acessar essa rota, você obterá todos os dados referentes ao anime, o formato é no tipo JSON, como os exemplos abaixo:",
-                "tags":["Rotas (endpoints)"],
-                "responses": {
-                    "404":{
-                        "description": "Infos not found"
-                    },
-                    "200": {
-                        "description": "Exemplo do objeto com todas as informações sobre o anime",
-                        "content": {
-                            "application/json":{
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Anime"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post":{
-              "description":"Inserir uma informação nova na rota de animes",
+  "openapi":"3.0.0",
+  "info":{
+      "title":"Death Note API",
+      "description":"O DeathNoteAPI fornece acesso rápido e poderoso a diversas informações do anime Death Note incluindo dados de personagens, sobre o anime, fatos, locais e muito mais. Ela é caracterizada como uma API REST possuindo rotas(endpoints) para a consulta de informações e notícias, alteração de dados, exclusão de blogs e etc."
+  },
+  "version":"1.0.0",
+  "paths": {
+      "/anime":{
+          "get": {
+              "description":"Ao acessar essa rota, você obterá todos os dados referentes ao anime, o formato é no tipo JSON, como os exemplos abaixo:",
               "tags":["Rotas (endpoints)"],
-              "requestBody":{
-                  "content":{
-                      "application/json": {
-                          "schema":{
-                              "$ref": "#/components/schemas/AnimeBodyRequest"
-                          }
-                      }
-                  }
-              },
               "responses": {
-                  "422":{
-                      "description": "Request body invalid"
+                  "404":{
+                      "description": "Infos not found"
                   },
                   "200": {
-                      "description": "OK",
+                      "description": "Exemplo do objeto com todas as informações sobre o anime",
                       "content": {
                           "application/json":{
-                              "schema":{
+                              "schema": {
                                   "type": "object",
                                   "$ref": "#/components/schemas/Anime"
                               }
@@ -56,17 +27,14 @@
                   }
               }
           },
-          "put":{
-            "description":"Alterar uma informação nova na rota de animes",
+          "post":{
+            "description":"Inserir uma informação nova na rota de animes",
             "tags":["Rotas (endpoints)"],
             "requestBody":{
                 "content":{
                     "application/json": {
                         "schema":{
-                            "type": "object",
-                            "example": {
-                              "animeName": "Death Note v2"
-                            }                                                 
+                            "$ref": "#/components/schemas/AnimeBodyRequest"
                         }
                     }
                 }
@@ -88,8 +56,8 @@
                 }
             }
         },
-        "delete":{
-          "description":"Deletar uma informação nova na rota de animes",
+        "put":{
+          "description":"Alterar uma informação nova na rota de animes",
           "tags":["Rotas (endpoints)"],
           "requestBody":{
               "content":{
@@ -97,8 +65,7 @@
                       "schema":{
                           "type": "object",
                           "example": {
-                            "animeName": true,
-                            "description":true
+                            "animeName": "Death Note v2"
                           }                                                 
                       }
                   }
@@ -120,177 +87,44 @@
                   }
               }
           }
-      }
-        },
-        "/characters": {
-            "get":{
-                "description":"Ao acessar essa rota, você obterá os dados de todos os personagens presentes no anime, o formato desses dados será um JSON, igual no exemplo abaixo:",
-                "tags":["Rotas (endpoints)"],
-                "responses": {
-                    "404":{
-                        "description": "Data not found"
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json":{
-                                "schema":{
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Characters"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post":{
-                "description":"Inserir um personagem novo na lista de personagens",
-                "tags":["Rotas (endpoints)"],
-                "requestBody":{
-                    "content":{
-                        "application/json": {
-                            "schema":{
-                                "$ref": "#/components/schemas/CharacterBodyRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "422":{
-                        "description": "Request body invalid"
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json":{
-                                "schema":{
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Characters"
-                                }
-                            }
-                        }
+      },
+      "delete":{
+        "description":"Deletar uma informação nova na rota de animes",
+        "tags":["Rotas (endpoints)"],
+        "requestBody":{
+            "content":{
+                "application/json": {
+                    "schema":{
+                        "type": "object",
+                        "example": {
+                          "animeName": true,
+                          "description":true
+                        }                                                 
                     }
                 }
             }
         },
-        "/characters/{id}":{
-            "get":{
-                "description":"Ao acessar essa rota, você obterá os dado do personagem a partir do ID colocado no path, o formato desses dados será um JSON, igual no exemplo abaixo:",
-                "tags":["Rotas (endpoints)"],
-                "parameters": [
-                    {
-                      "name": "id",
-                      "in": "path",
-                      "description": "ID do personagem",
-                      "required": true,
-                      "schema": {
-                        "type": "string",
-                        "items": {
-                          "type": "object"
-                        }
-                      },
-                      "style": "simple"
-                    }
-                  ],
-                "responses": {
-                    "404":{
-                        "description": "Data not found"
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json":{
-                                "schema":{
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Character"
-                                }
-                            }
-                        }
-                    }
-                }
+        "responses": {
+            "422":{
+                "description": "Request body invalid"
             },
-            "patch": {
-                "description":"Alterar um personagem presente na lista de personagens",
-                "tags":["Rotas (endpoints)"],
-                "parameters": [
-                    {
-                      "name": "id",
-                      "in": "path",
-                      "description": "ID do personagem",
-                      "required": true,
-                      "schema": {
-                        "type": "string",
-                        "items": {
-                          "type": "object"
-                        }
-                      },
-                      "style": "simple"
-                    }
-                  ],
-                "requestBody":{
-                    "content":{
-                        "application/json": {
-                            "schema":{
-                                "type":"object",
-                                "$ref": "#/components/schemas/CharacterBodyRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "422":{
-                        "description": "Request body invalid"
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/components/schemas/Characters"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete":{
-                "description":"Deletar um personagem presente na lista de personagens",
-                "tags":["Rotas (endpoints)"],
-                "parameters": [
-                    {
-                      "name": "id",
-                      "in": "path",
-                      "description": "ID do personagem",
-                      "required": true,
-                      "schema": {
-                        "type": "string",
-                        "items": {
-                          "type": "object"
-                        }
-                      },
-                      "style": "simple"
-                    }
-                  ],
-                "responses": {
-                    "404":{
-                        "description": "Character not found"
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/components/schemas/Characters"
-                                }
-                            }
+            "200": {
+                "description": "OK",
+                "content": {
+                    "application/json":{
+                        "schema":{
+                            "type": "object",
+                            "$ref": "#/components/schemas/Anime"
                         }
                     }
                 }
             }
-        },
-        "/organizations": {
+        }
+    }
+      },
+      "/characters": {
           "get":{
-              "description":"Ao acessar essa rota, você obterá os dados de todos as organizações presentes no anime, o formato desses dados será um JSON, igual no exemplo abaixo:",
+              "description":"Ao acessar essa rota, você obterá os dados de todos os personagens presentes no anime, o formato desses dados será um JSON, igual no exemplo abaixo:",
               "tags":["Rotas (endpoints)"],
               "responses": {
                   "404":{
@@ -339,9 +173,9 @@
               }
           }
       },
-      "/organizations/{id}":{
+      "/characters/{id}":{
           "get":{
-              "description":"Ao acessar essa rota, você obterá os dado da organização a partir do ID colocado no path, o formato desses dados será um JSON, igual no exemplo abaixo:",
+              "description":"Ao acessar essa rota, você obterá os dado do personagem a partir do ID colocado no path, o formato desses dados será um JSON, igual no exemplo abaixo:",
               "tags":["Rotas (endpoints)"],
               "parameters": [
                   {
@@ -376,13 +210,13 @@
               }
           },
           "patch": {
-              "description":"Alterar uma organização presente na lista",
+              "description":"Alterar um personagem presente na lista de personagens",
               "tags":["Rotas (endpoints)"],
               "parameters": [
                   {
                     "name": "id",
                     "in": "path",
-                    "description": "ID da organização",
+                    "description": "ID do personagem",
                     "required": true,
                     "schema": {
                       "type": "string",
@@ -412,9 +246,9 @@
                       "content": {
                           "application/json":{
                               "schema":{
-                                  "$ref": "#/components/schemas/Organization"
+                                  "$ref": "#/components/schemas/Characters"
                               }
-                          } 
+                          }
                       }
                   }
               }
@@ -453,591 +287,810 @@
                   }
               }
           }
-      }
+      },
+      "/organizations": {
+        "get":{
+            "description":"Ao acessar essa rota, você obterá os dados de todos as organizações presentes no anime, o formato desses dados será um JSON, igual no exemplo abaixo:",
+            "tags":["Rotas (endpoints)"],
+            "responses": {
+                "404":{
+                    "description": "Data not found"
+                },
+                "200": {
+                    "description": "OK",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "$ref": "#/components/schemas/Organizations"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "post":{
+            "description":"Inserir um personagem novo na lista de personagens",
+            "tags":["Rotas (endpoints)"],
+            "requestBody":{
+                "content":{
+                    "application/json": {
+                        "schema":{
+                            "$ref": "#/components/schemas/OrganizationBodyRequest"
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "422":{
+                    "description": "Request body invalid"
+                },
+                "200": {
+                    "description": "OK",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "$ref": "#/components/schemas/Organizations"
+                            }
+                        }
+                    }
+                }
+            }
+        }
     },
-    "components":{
-        "schemas":{
-            "Anime":{
-                "type":"object",
-                "example": {
-                    "animeName": "Death Note",
-                    "description": "Death Note (stylized in all caps) is a Japanese manga series written by Tsugumi Ohba and illustrated by Takeshi Obata. The story follows Light Yagami, a teen genius who discovers a mysterious notebook: the \"Death Note\", which belonged to the shinigami Ryuk, and grants the user the supernatural ability to kill anyone whose name is written in its pages. The series centers around Light subsequent attempts to use the Death Note to carry out a worldwide massacre of individuals whom he deems immoral and to create a crime-free society, using the alias of a god-like vigilante named \"Kira\", and the subsequent efforts of an elite Japanese police task force, led by enigmatic detective L, to apprehend him. Death Note ran in Shueisha manga magazine Weekly Shōnen Jump from December 2003 to May 2006. Its 108 chapters were collected in 12 tankōbon volumes.",
-                    "genres": [
-                      "Mystery",
-                      "Psychological thriller",
-                      "Supernatural thriller"
-                    ],
-                    "productionInfos": {
-                      "manga": {
-                        "writtenBy": "Tsugumi Ohba",
-                        "illustratedBy": "Takeshi Obata",
-                        "publishedBy": "Shueisha",
-                        "englishPublishers": [
-                          "Viz Media",
-                          "Madman Entertainment"
-                        ],
-                        "imprint": "Jump Comics",
-                        "demographic": "Shounen",
-                        "originalRun": " December 1, 2003 – May 15, 2006"
-                      },
-                      "novel": {
-                        "writtenBy": "Nisio Isin",
-                        "publishedBy": "Shueisha",
-                        "englishPublishers": [
-                          "Viz Media"
-                        ],
-                        "published": "August 1, 2006"
-                      },
-                      "anime": {
-                        "directedBy": "Tetsurō Araki",
-                        "productedBy": [
-                          "Toshio Nakatani",
-                          "Manabu Tamura",
-                          "Masao Maruyama"
-                        ],
-                        "writtenBy": "Toshiki Inoue",
-                        "musicBy": [
-                          "Yoshihisa Hirano",
-                          "Hideki Taniuchi"
-                        ],
-                        "studio": "Madhouse",
-                        "licensedBy": [
-                          "Crunchyroll",
-                          "Viz Media"
-                        ],
-                        "genre": "Shounen",
-                        "originalRun": "October 4, 2006 – June 27, 2007"
-                      }
+    "/organizations/{id}":{
+        "get":{
+            "description":"Ao acessar essa rota, você obterá os dado da organização a partir do ID colocado no path, o formato desses dados será um JSON, igual no exemplo abaixo:",
+            "tags":["Rotas (endpoints)"],
+            "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID do personagem",
+                  "required": true,
+                  "schema": {
+                    "type": "string",
+                    "items": {
+                      "type": "object"
                     }
                   },
-                  "properties":{
-                    "animeName":{
-                        "type": "string"
-                    },
-                    "description":{
-                        "type": "string"
-                    },
-                    "genres":{
-                        "type": "array"
-                    },
-                    "productionInfos":{
-                        "type":"object"
-                    },
-                    "novel":{
-                        "type":"object"
-                    },
-                    "anime":{
-                        "type":"object"
-                    },
-                    "genre":{
-                        "type":"string"
-                    }
+                  "style": "simple"
                 }
-            },
-            "AnimeBodyRequest":{
-              "type":"object",
-              "example":{
-                "newAnimeValue":"teste"
-              }
-            },
-            "CharacterBodyRequest":{
-                "type":"object",
-                "example":{
-                    "name":"Name teste",
-                    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-                    "infos": {
-                        "physics":{
-                            "eyeColor": "brown",
-                            "hairColor": "brown",
-                            "height": 169,
-                            "specie": "Human"
-                        }
-                    },
-                    "personals": {
-                        "age":27,
-                        "genre": "male",
-                        "country": "Brazil",
-                        "occupation": "Student"
-                    }
+              ],
+            "responses": {
+                "404":{
+                    "description": "Data not found"
                 },
-                "properties":{
-                    "name": {
-                        "type":"string"
-                    },
-                    "description": {
-                        "type":"string"
-                    },
-                    "infos": {
-                        "type":"object"
-                    }
-                }
-            },
-            "Character":{
-                "type":"object",
-                "example":{
-                    "id":1,
-                    "name":"Light Yagami",
-                    "url": "localhost:3000/characters/1",
-                    "description": "Light Yagami (夜神月, Yagami Raito) is the main protagonist of the Death Note series. After discovering the Death Note, he decides to use it to rid the world of criminals. His killings are eventually labelled by the people living in Japan as the work of Kira.",
-                    "mainCharacter": true,
-                    "infos": {
-                        "physics":{
-                            "eyeColor": "brown",
-                            "hairColor": "brown",
-                            "height": 179,
-                            "specie": "Human"
+                "200": {
+                    "description": "OK",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "$ref": "#/components/schemas/Organization"
+                            }
                         }
-                    },
-                    "personals": {
-                        "age":17,
-                        "genre": "male",
-                        "country": "Japan",
-                        "occupation": "Student"
                     }
+                }
+            }
+        },
+        "patch": {
+            "description":"Alterar uma organização presente na lista",
+            "tags":["Rotas (endpoints)"],
+            "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID da organização",
+                  "required": true,
+                  "schema": {
+                    "type": "string",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "style": "simple"
+                }
+              ],
+            "requestBody":{
+                "content":{
+                    "application/json": {
+                        "schema":{
+                            "type":"object",
+                            "$ref": "#/components/schemas/Organizations"
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "422":{
+                    "description": "Request body invalid"
                 },
-                "properties":{
-                    "id": {
-                        "type":"number"
-                    },
-                    "name": {
-                        "type":"string"
-                    },
-                    "url": {
-                        "type":"string"
-                    },
-                    "description": {
-                        "type":"string"
-                    },
-                    "mainCharacter": {
-                        "type":"boolean"
-                    },
-                    "infos": {
-                        "type":"object"
+                "200": {
+                    "description": "OK",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Organization"
+                            }
+                        } 
                     }
                 }
-            },
-            "Characters": {
-                "type":"object",
-                "example": {
-                        "count": 19,
-                        "results": [
-                          {
-                            "id": 1,
-                            "name": "Light Yagami",
-                            "url": "localhost:3000/characters/1",
-                            "description": "Light Yagami (夜神月, Yagami Raito) is the main protagonist of the Death Note series. After discovering the Death Note, he decides to use it to rid the world of criminals. His killings are eventually labelled by the people living in Japan as the work of Kira.",
-                            "mainCharacter": true,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "brown",
-                                "height": 179,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": 17,
-                                "genre": "male",
-                                "country": "Japan",
-                                "occupation": "Student"
-                              }
+            }
+        },
+        "delete":{
+            "description":"Deletar um personagem presente na lista de personagens",
+            "tags":["Rotas (endpoints)"],
+            "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID do personagem",
+                  "required": true,
+                  "schema": {
+                    "type": "string",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "style": "simple"
+                }
+              ],
+            "responses": {
+                "404":{
+                    "description": "Character not found"
+                },
+                "200": {
+                    "description": "OK",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Organizations"
                             }
-                          },
-                          {
-                            "id": 2,
-                            "name": "L",
-                            "url": "localhost:3000/characters/2",
-                            "description": "L (エル, Eru) is a world-renowned detective who takes on the challenge of catching the mass murderer known as Kira. In his investigation, L becomes suspicious of Light Yagami and makes it his goal to prove that Light is Kira.",
-                            "mainCharacter": true,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "black",
-                                "height": 179,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": 24,
-                                "genre": "male",
-                                "country": "Japan",
-                                "occupation": "Detective"
-                              }
-                            }
-                          },
-                          {
-                            "id": 3,
-                            "name": "Ryuk",
-                            "url": "localhost:3000/characters/3",
-                            "description": "Ryuk (リューク, Ryūku) is a Shinigami who indirectly gives Light Yagami a Death Note after becoming bored with the Shinigami Realm. In an effort to amuse himself, he steals a second Death Note and drops it into the Human World for someone to find. This Death Note is discovered by Light, who uses it in an attempt to cleanse the world of evil and injustice, satisfying Ryuk need for entertainment.",
-                            "mainCharacter": true,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "yellow",
-                                "hairColor": "black",
-                                "height": 230,
-                                "specie": "Shinigami"
-                              },
-                              "personals": {
-                                "age": null,
-                                "genre": "male",
-                                "country": "Japan",
-                                "occupation": "Shinigami"
-                              }
-                            }
-                          },
-                          {
-                            "id": 4,
-                            "name": "Misa Amane",
-                            "url": "localhost:3000/characters/4",
-                            "description": "Misa Amane (弥 海砂, Amane Misa) is an up-and-coming model, actress, and supporter of Kira who eventually becomes the Second Kira. After gaining a Death Note, she seeks out Kira in order to thank him for killing the man who murdered her family and to offer him her help. Having made the trade for the Shinigami Eyes, Misa learns that the identity of Kira is Light Yagami. After a meeting with Light, she decides to dedicate her life to helping Light however she can, and becomes determined to use her eyes to uncover L real name.",
-                            "mainCharacter": true,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "yellow",
-                                "height": 249,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": 19,
-                                "genre": "female",
-                                "country": null,
-                                "occupation": "Famous"
-                              }
-                            }
-                          },
-                          {
-                            "id": 5,
-                            "name": "Rem",
-                            "url": "localhost:3000/characters/5",
-                            "description": "Rem (レム, Remu) is the Shinigami who gives Misa Amane one of the Death Notes she had. Like Ryuk, Rem possesses two Death Notes; however, Rem did not get hers through trickery. The Shinigami Gelus, who had fallen in love with Misa, sacrificed himself to kill her destined murderer. In doing so he was reduced to dust, leaving only his Death Note. Rem delivered this Death Note to Misa, since it was her life he saved.",
-                            "mainCharacter": true,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "yellow",
-                                "hairColor": "white",
-                                "height": 155,
-                                "specie": "Shinigami"
-                              },
-                              "personals": {
-                                "age": null,
-                                "genre": "female",
-                                "country": "Japan",
-                                "occupation": "Shinigami"
-                              }
-                            }
-                          },
-                          {
-                            "id": 6,
-                            "name": "Near",
-                            "url": "localhost:3000/characters/6",
-                            "description": "Near (ニア, Nia) is the younger of L two successors, raised in Wammy House—Watari orphanage for gifted children in Winchester, England. After L death, Near begins his investigation of the Kira case, gathering evidence over a period of four years. Near takes his findings to the President of the United States and reveals himself to be the true successor of L. Soon after, Near becomes the head of the Special Provision for Kira and continues the hunt for Kira. After making contact with \"L\" (Light Yagami), Near begins to suspect that he is also Kira.",
-                            "mainCharacter": true,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "white",
-                                "height": 171,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": 17,
-                                "genre": "male",
-                                "country": null,
-                                "occupation": "Detective"
-                              }
-                            }
-                          },
-                          {
-                            "id": 7,
-                            "name": "Mello",
-                            "url": "localhost:3000/characters/7",
-                            "description": "Mello (メロ, Mero) is the older of L two successors raised at Wammy House, Watari orphanage for gifted children in Winchester, England. When Roger asks that Mello and Near work together to capture Kira, Mello refuses, pointing out the differences between them. He leaves the orphanage soon after and eventually seeks help from the Mafia.",
-                            "mainCharacter": true,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "yellow",
-                                "height": 175,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": 19,
-                                "genre": "female",
-                                "country": "Japan",
-                                "occupation": "Detective"
-                              }
-                            }
-                          },
-                          {
-                            "id": 8,
-                            "name": "Teru Mikami",
-                            "url": "localhost:3000/characters/8",
-                            "description": "Teru Mikami is a criminal prosecutor, a fanatical supporter of Kira, and the fourth Kira. When Light needs a new Kira proxy to hide his identity, Mikami is selected as the new Kira by Light, purely based on his intuition.[14] Since childhood, Mikami has had a strong sense of justice, but his views have become warped due to years of bullying and trauma.[15] Mikami wishes to punish those he considers to be evil (which, to Light dismay, includes unproductive people and reformed criminals) and worships Kira as a god. Mikami mutters the word \"delete\" (削除, sakujo) repeatedly to himself while writing in the Death Note, which Tsugumi Ohba felt made him more interesting",
-                            "mainCharacter": false,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "black",
-                                "height": 184,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": 27,
-                                "genre": "male",
-                                "country": "Japan",
-                                "occupation": "Criminal"
-                              }
-                            }
-                          },
-                          {
-                            "id": 9,
-                            "name": "Minoru Tanaka",
-                            "url": "localhost:3000/characters/9",
-                            "description": "Minoru Tanaka (田中実, Tanaka Minoru The new possessor of the Death Note and the main protagonist of Death Note: Special One Shot, he decides to auction off the Death Note instead of using it. Having Ryuk go out to send his instructions to Sakura TV, he creates a hashtag to auction off the Death Note, ultimately leading to world governments bidding on the Death Note, ultimately getting the United States to bid $10,000,000,000,000 for it, while various law enforcement agencies are out to catch Minoru, whom Near names \"A-Kira\". During that time though, the Shinigami King is infuriated by the idea of the Note itself being for sale, and creates a new rule to the Note. After the Note is paid for by depositing the money equally into the savings account of every Japanese person 60 or below, the new rule is revealed to be that anyone involved in the buying or selling of the Death Note will be killed upon fulfillment of the deal. The US president balks at this, and secretly refuses to take ownership of the note (though mentioning he will publicly bluff about having it), and Minoru dies immediately after trying to cash out his payment.",
-                            "mainCharacter": false,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "black",
-                                "height": 158,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": 17,
-                                "genre": "male",
-                                "country": "Japan",
-                                "occupation": "Student"
-                              }
-                            }
-                          },
-                          {
-                            "id": 10,
-                            "name": "Soichiro Yagami",
-                            "url": "localhost:3000/characters/10",
-                            "description": "Soichiro is a kind man with a strong sense of justice. He cares greatly for his family and the members of the Japanese Task Force. He is a serious and responsible man that gains the respect of many. He has a strong sense of duty, and even after the police stop funding the Kira investigation he continues trying to solve the case with the Task Force.",
-                            "mainCharacter": false,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "black",
-                                "height": 180,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": 47,
-                                "genre": "male",
-                                "country": "Japan",
-                                "occupation": "Detective"
-                              }
-                            }
-                          },
-                          {
-                            "id": 11,
-                            "name": "Sachiko Yagami",
-                            "url": "localhost:3000/characters/11",
-                            "description": "Sachiko Yagami is the wife of Soichiro Yagami and the mother of Light. Like her daughter Sayu, she is unaware of Light ever being Kira even after his death. She is portrayed by Michiko Godai in the live-action films.In the live-action drama, Sachiko dies during her treatment, when Light and Sayu was a kid. design 130\" /> Author Tsugumi Ohba considers both Sachiko and Sayu as the purest characters in the series stating that he could not \"sense any evil or twistedness from these two at all.\" The Yagami family is thought to be the most \"pitiful\" characters in the book by both creators with Ohba later adding that he felt sympathy for mother and daughter",
-                            "mainCharacter": false,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "brown",
-                                "height": 182,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": 48,
-                                "genre": "female",
-                                "country": "Japan",
-                                "occupation": "Mom"
-                              }
-                            }
-                          },
-                          {
-                            "id": 12,
-                            "name": "Sayu Yagami",
-                            "url": "localhost:3000/characters/12",
-                            "description": "Sayu Yagami is Light kindhearted younger sister. Like her mother she never learns of Light possession of the Death Note or his identity as Kira. In the manga and anime, after Takimura death, Mello gang kidnaps her in exchange for the Death Note possessed by the investigation team. Although being returned unharmed, Sayu falls into a state of shock, eventually becoming unresponsive to the presence of others. In the live-action films, her character is portrayed by actress Hikari Mitsushima, and since the mafia does not play a role, she is not kidnapped. In the drama series, Sayu is portrayed by Reiko Fujiwara.",
-                            "mainCharacter": false,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "brown",
-                                "height": null,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": 14,
-                                "genre": "female",
-                                "country": "Japan",
-                                "occupation": "Student"
-                              }
-                            }
-                          },
-                          {
-                            "id": 13,
-                            "name": "David Hoope",
-                            "url": "localhost:3000/characters/13",
-                            "description": "David Hoope is the President of the United States of America in the storyline. He assists in the formation of Near SPK, and provides information and funding to Mello under threats of the Death Note. He turns to Light, despite knowing that he is not the real L, who manipulates him into providing assistance and attacking Mello hideout. When the attack fails, President Hoope commits suicide to prevent Mello from writing his name and making him launch a nuclear strike. How to Read 13 states \"It is believed that Kira disposed of him.\"[64] In the second Rewrite special, the mafia plot is omitted, with Light instead blackmailing him to leak information about the SPK. Light in turn forwards this information to Takada and Mikami, and they kill the SPK. In the anime, the character was merged with that of George Sairas.",
-                            "mainCharacter": false,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "yellow",
-                                "height": null,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": null,
-                                "genre": "male",
-                                "country": "Unites States",
-                                "occupation": "President"
-                              }
-                            }
-                          },
-                          {
-                            "id": 14,
-                            "name": "Koreyoshi Kitamura",
-                            "url": "localhost:3000/characters/14",
-                            "description": "Koreyoshi Kitamura is the deputy director of the NPA and Soichiro superior. He feels weighted by Yotsuba pressure. How to Read 13 states that he \"is not a bad guy",
-                            "mainCharacter": false,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "white",
-                                "height": null,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": null,
-                                "genre": "male",
-                                "country": "Japan",
-                                "occupation": "Deputy Director"
-                              }
-                            }
-                          },
-                          {
-                            "id": 15,
-                            "name": "Kanichi Takimura",
-                            "url": "localhost:3000/characters/15",
-                            "description": "Kanichi Takimura is the head director of the NPA. He is kidnapped by Mello in order to be used as a hostage in exchange for the Death Note. He is later controlled to commit suicide by Light Yagami.",
-                            "mainCharacter": false,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "yellow",
-                                "height": null,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": null,
-                                "genre": "male",
-                                "country": "Japan",
-                                "occupation": "Kidnapped"
-                              }
-                            }
-                          },
-                          {
-                            "id": 16,
-                            "name": "Yamamoto",
-                            "url": "localhost:3000/characters/16",
-                            "description": "Yamamoto is the newest member of the NPA who only appears in the final chapter, Finale. He works as Matsuda junior, and was seen troubled by Matsuda bothering him with going to a bar. In the special one-shot chapter set three years later, he can be seen in the same room with the rest of the team, albeit not belonging to them, as noted by Matsuda. According to Tsugumi Ohba, the character was added during the continuity stage to show dirty side of Matsuda as a senior member, and there was no other specific intention to the inclusion of him.",
-                            "mainCharacter": false,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "black",
-                                "height": null,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": null,
-                                "genre": "male",
-                                "country": "Japan",
-                                "occupation": "Task Force Agent"
-                              }
-                            }
-                          },
-                          {
-                            "id": 17,
-                            "name": "Kurou Otaharada",
-                            "url": "localhost:3000/characters/17",
-                            "description": "An unemployed 42-year-old man, Kurou Otoharada is the first criminal that Light kills. Otoharada name is announced on television as he holds eight hostages in a nursery school. As this incident was reported only on local television, it helped L narrow down Kira whereabouts.",
-                            "mainCharacter": false,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "brown",
-                                "height": null,
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": 43,
-                                "genre": "male",
-                                "country": "Japan",
-                                "occupation": "Criminal"
-                              }
-                            }
-                          },
-                          {
-                            "id": 18,
-                            "name": "Takuo Shibuimaru",
-                            "url": "localhost:3000/characters/18",
-                            "description": "Takuo Shibuimaru, nicknamed \"Shibutaku\" (シブタク, \"Cool Taku\"), is the second person that Light kills. Shibuimaru rides a motorcycle and travels with a group of bikers. After Light sees him harassing and chasing a woman (in the anime, he was about to rape the woman), Light writes his name down with a death by traffic accident. A truck slams into Shibuimaru motorcycle, killing him. It was this death that fully convinces Light that the Death Note does work. In the manga Light feels some guilt since Shibuimaru is not a criminal.",
-                            "mainCharacter": false,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "brown",
-                                "hairColor": "brown",
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": 23,
-                                "genre": "male",
-                                "country": "Japan",
-                                "occupation": "Criminal"
-                              }
-                            }
-                          },
-                          {
-                            "id": 19,
-                            "name": "Lind L. Tailor",
-                            "url": "localhost:3000/characters/19",
-                            "description": "Lind L. Tailor is a convicted criminal waiting on death row for an unspecified capital offence; this information was kept secretly away from the public. L places Tailor as his decoy on television in exchange for being pardoned by the government. The television states that the broadcast is worldwide and that Tailor statements are being translated into Japanese. After Tailor states that he is \"L\", he reads a declaration stating that Kira is evil. Light, in a rage, kills Tailor with a heart attack. The real L announces that Tailor was a decoy, a criminal on death row, and discovers that Kira cannot kill the real L without having seen his face, and that Kira is in Kanto, as that was the only area that the appearance was actually broadcast in.",
-                            "mainCharacter": false,
-                            "infos": {
-                              "physics": {
-                                "eyeColor": "black",
-                                "hairColor": "black",
-                                "specie": "Human"
-                              },
-                              "personals": {
-                                "age": null,
-                                "country": "United States",
-                                "occupation": "Criminal"
-                              }
-                            }
-                          }
-                        ]
-                      },
-                "properties":{
-                    "count": {
-                        "type": "integer"
-                    },
-                    "results":{
-                        "type": "array"
+                        }
                     }
                 }
-            },
-            "Organization": {
-              "type": "object",
-              "example":{
-                "id":1,
-                "name":"Armed Forces",
-                "url": "localhost:3000/organizations/1",
-                "description": "It is the main investigative group for the Kira case, and they are led by the world's greatest detective, L, who preferred to be called Ryuzaki by the investigators. It was founded after the Interpol meeting with the countries of the world and after L proved that Kira is in Japan.",
-                "members":["Ryuzaki","Light","Aizawa"]
-              }
             }
         }
     }
+  },
+  "components":{
+      "schemas":{
+          "Anime":{
+              "type":"object",
+              "example": {
+                  "animeName": "Death Note",
+                  "description": "Death Note (stylized in all caps) is a Japanese manga series written by Tsugumi Ohba and illustrated by Takeshi Obata. The story follows Light Yagami, a teen genius who discovers a mysterious notebook: the \"Death Note\", which belonged to the shinigami Ryuk, and grants the user the supernatural ability to kill anyone whose name is written in its pages. The series centers around Light subsequent attempts to use the Death Note to carry out a worldwide massacre of individuals whom he deems immoral and to create a crime-free society, using the alias of a god-like vigilante named \"Kira\", and the subsequent efforts of an elite Japanese police task force, led by enigmatic detective L, to apprehend him. Death Note ran in Shueisha manga magazine Weekly Shōnen Jump from December 2003 to May 2006. Its 108 chapters were collected in 12 tankōbon volumes.",
+                  "genres": [
+                    "Mystery",
+                    "Psychological thriller",
+                    "Supernatural thriller"
+                  ],
+                  "productionInfos": {
+                    "manga": {
+                      "writtenBy": "Tsugumi Ohba",
+                      "illustratedBy": "Takeshi Obata",
+                      "publishedBy": "Shueisha",
+                      "englishPublishers": [
+                        "Viz Media",
+                        "Madman Entertainment"
+                      ],
+                      "imprint": "Jump Comics",
+                      "demographic": "Shounen",
+                      "originalRun": " December 1, 2003 – May 15, 2006"
+                    },
+                    "novel": {
+                      "writtenBy": "Nisio Isin",
+                      "publishedBy": "Shueisha",
+                      "englishPublishers": [
+                        "Viz Media"
+                      ],
+                      "published": "August 1, 2006"
+                    },
+                    "anime": {
+                      "directedBy": "Tetsurō Araki",
+                      "productedBy": [
+                        "Toshio Nakatani",
+                        "Manabu Tamura",
+                        "Masao Maruyama"
+                      ],
+                      "writtenBy": "Toshiki Inoue",
+                      "musicBy": [
+                        "Yoshihisa Hirano",
+                        "Hideki Taniuchi"
+                      ],
+                      "studio": "Madhouse",
+                      "licensedBy": [
+                        "Crunchyroll",
+                        "Viz Media"
+                      ],
+                      "genre": "Shounen",
+                      "originalRun": "October 4, 2006 – June 27, 2007"
+                    }
+                  }
+                },
+                "properties":{
+                  "animeName":{
+                      "type": "string"
+                  },
+                  "description":{
+                      "type": "string"
+                  },
+                  "genres":{
+                      "type": "array"
+                  },
+                  "productionInfos":{
+                      "type":"object"
+                  },
+                  "novel":{
+                      "type":"object"
+                  },
+                  "anime":{
+                      "type":"object"
+                  },
+                  "genre":{
+                      "type":"string"
+                  }
+              }
+          },
+          "AnimeBodyRequest":{
+            "type":"object",
+            "example":{
+              "newAnimeValue":"teste"
+            }
+          },
+          "CharacterBodyRequest":{
+              "type":"object",
+              "example":{
+                  "name":"Name teste",
+                  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+                  "infos": {
+                      "physics":{
+                          "eyeColor": "brown",
+                          "hairColor": "brown",
+                          "height": 169,
+                          "specie": "Human"
+                      }
+                  },
+                  "personals": {
+                      "age":27,
+                      "genre": "male",
+                      "country": "Brazil",
+                      "occupation": "Student"
+                  }
+              },
+              "properties":{
+                  "name": {
+                      "type":"string"
+                  },
+                  "description": {
+                      "type":"string"
+                  },
+                  "infos": {
+                      "type":"object"
+                  }
+              }
+          },
+          "OrganizationBodyRequest": {
+            "type":"object",
+            "examples": {
+              "name": "Armed Force",
+              "url": "http://localhost:3000/organizations/:id",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+              "members": [
+                "Member1",
+                "Member2"
+              ],
+              "__v": 0
+            },
+            "properties": {
+              "name": {
+                "type":"string"
+              },
+              "url": {
+                "type":"string"
+              },
+              "description": {
+                  "type":"string"
+              },
+              "members": {
+                  "type":"array"
+              }
+            }
+          },
+          "Character":{
+              "type":"object",
+              "example":{
+                  "id":1,
+                  "name":"Light Yagami",
+                  "url": "localhost:3000/characters/1",
+                  "description": "Light Yagami (夜神月, Yagami Raito) is the main protagonist of the Death Note series. After discovering the Death Note, he decides to use it to rid the world of criminals. His killings are eventually labelled by the people living in Japan as the work of Kira.",
+                  "mainCharacter": true,
+                  "infos": {
+                      "physics":{
+                          "eyeColor": "brown",
+                          "hairColor": "brown",
+                          "height": 179,
+                          "specie": "Human"
+                      }
+                  },
+                  "personals": {
+                      "age":17,
+                      "genre": "male",
+                      "country": "Japan",
+                      "occupation": "Student"
+                  }
+              },
+              "properties":{
+                  "id": {
+                      "type":"number"
+                  },
+                  "name": {
+                      "type":"string"
+                  },
+                  "url": {
+                      "type":"string"
+                  },
+                  "description": {
+                      "type":"string"
+                  },
+                  "mainCharacter": {
+                      "type":"boolean"
+                  },
+                  "infos": {
+                      "type":"object"
+                  }
+              }
+          },
+          "Characters": {
+              "type":"object",
+              "example": {
+                      "count": 19,
+                      "results": [
+                        {
+                          "id": 1,
+                          "name": "Light Yagami",
+                          "url": "localhost:3000/characters/1",
+                          "description": "Light Yagami (夜神月, Yagami Raito) is the main protagonist of the Death Note series. After discovering the Death Note, he decides to use it to rid the world of criminals. His killings are eventually labelled by the people living in Japan as the work of Kira.",
+                          "mainCharacter": true,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "brown",
+                              "height": 179,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": 17,
+                              "genre": "male",
+                              "country": "Japan",
+                              "occupation": "Student"
+                            }
+                          }
+                        },
+                        {
+                          "id": 2,
+                          "name": "L",
+                          "url": "localhost:3000/characters/2",
+                          "description": "L (エル, Eru) is a world-renowned detective who takes on the challenge of catching the mass murderer known as Kira. In his investigation, L becomes suspicious of Light Yagami and makes it his goal to prove that Light is Kira.",
+                          "mainCharacter": true,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "black",
+                              "height": 179,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": 24,
+                              "genre": "male",
+                              "country": "Japan",
+                              "occupation": "Detective"
+                            }
+                          }
+                        },
+                        {
+                          "id": 3,
+                          "name": "Ryuk",
+                          "url": "localhost:3000/characters/3",
+                          "description": "Ryuk (リューク, Ryūku) is a Shinigami who indirectly gives Light Yagami a Death Note after becoming bored with the Shinigami Realm. In an effort to amuse himself, he steals a second Death Note and drops it into the Human World for someone to find. This Death Note is discovered by Light, who uses it in an attempt to cleanse the world of evil and injustice, satisfying Ryuk need for entertainment.",
+                          "mainCharacter": true,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "yellow",
+                              "hairColor": "black",
+                              "height": 230,
+                              "specie": "Shinigami"
+                            },
+                            "personals": {
+                              "age": null,
+                              "genre": "male",
+                              "country": "Japan",
+                              "occupation": "Shinigami"
+                            }
+                          }
+                        },
+                        {
+                          "id": 4,
+                          "name": "Misa Amane",
+                          "url": "localhost:3000/characters/4",
+                          "description": "Misa Amane (弥 海砂, Amane Misa) is an up-and-coming model, actress, and supporter of Kira who eventually becomes the Second Kira. After gaining a Death Note, she seeks out Kira in order to thank him for killing the man who murdered her family and to offer him her help. Having made the trade for the Shinigami Eyes, Misa learns that the identity of Kira is Light Yagami. After a meeting with Light, she decides to dedicate her life to helping Light however she can, and becomes determined to use her eyes to uncover L real name.",
+                          "mainCharacter": true,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "yellow",
+                              "height": 249,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": 19,
+                              "genre": "female",
+                              "country": null,
+                              "occupation": "Famous"
+                            }
+                          }
+                        },
+                        {
+                          "id": 5,
+                          "name": "Rem",
+                          "url": "localhost:3000/characters/5",
+                          "description": "Rem (レム, Remu) is the Shinigami who gives Misa Amane one of the Death Notes she had. Like Ryuk, Rem possesses two Death Notes; however, Rem did not get hers through trickery. The Shinigami Gelus, who had fallen in love with Misa, sacrificed himself to kill her destined murderer. In doing so he was reduced to dust, leaving only his Death Note. Rem delivered this Death Note to Misa, since it was her life he saved.",
+                          "mainCharacter": true,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "yellow",
+                              "hairColor": "white",
+                              "height": 155,
+                              "specie": "Shinigami"
+                            },
+                            "personals": {
+                              "age": null,
+                              "genre": "female",
+                              "country": "Japan",
+                              "occupation": "Shinigami"
+                            }
+                          }
+                        },
+                        {
+                          "id": 6,
+                          "name": "Near",
+                          "url": "localhost:3000/characters/6",
+                          "description": "Near (ニア, Nia) is the younger of L two successors, raised in Wammy House—Watari orphanage for gifted children in Winchester, England. After L death, Near begins his investigation of the Kira case, gathering evidence over a period of four years. Near takes his findings to the President of the United States and reveals himself to be the true successor of L. Soon after, Near becomes the head of the Special Provision for Kira and continues the hunt for Kira. After making contact with \"L\" (Light Yagami), Near begins to suspect that he is also Kira.",
+                          "mainCharacter": true,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "white",
+                              "height": 171,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": 17,
+                              "genre": "male",
+                              "country": null,
+                              "occupation": "Detective"
+                            }
+                          }
+                        },
+                        {
+                          "id": 7,
+                          "name": "Mello",
+                          "url": "localhost:3000/characters/7",
+                          "description": "Mello (メロ, Mero) is the older of L two successors raised at Wammy House, Watari orphanage for gifted children in Winchester, England. When Roger asks that Mello and Near work together to capture Kira, Mello refuses, pointing out the differences between them. He leaves the orphanage soon after and eventually seeks help from the Mafia.",
+                          "mainCharacter": true,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "yellow",
+                              "height": 175,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": 19,
+                              "genre": "female",
+                              "country": "Japan",
+                              "occupation": "Detective"
+                            }
+                          }
+                        },
+                        {
+                          "id": 8,
+                          "name": "Teru Mikami",
+                          "url": "localhost:3000/characters/8",
+                          "description": "Teru Mikami is a criminal prosecutor, a fanatical supporter of Kira, and the fourth Kira. When Light needs a new Kira proxy to hide his identity, Mikami is selected as the new Kira by Light, purely based on his intuition.[14] Since childhood, Mikami has had a strong sense of justice, but his views have become warped due to years of bullying and trauma.[15] Mikami wishes to punish those he considers to be evil (which, to Light dismay, includes unproductive people and reformed criminals) and worships Kira as a god. Mikami mutters the word \"delete\" (削除, sakujo) repeatedly to himself while writing in the Death Note, which Tsugumi Ohba felt made him more interesting",
+                          "mainCharacter": false,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "black",
+                              "height": 184,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": 27,
+                              "genre": "male",
+                              "country": "Japan",
+                              "occupation": "Criminal"
+                            }
+                          }
+                        },
+                        {
+                          "id": 9,
+                          "name": "Minoru Tanaka",
+                          "url": "localhost:3000/characters/9",
+                          "description": "Minoru Tanaka (田中実, Tanaka Minoru The new possessor of the Death Note and the main protagonist of Death Note: Special One Shot, he decides to auction off the Death Note instead of using it. Having Ryuk go out to send his instructions to Sakura TV, he creates a hashtag to auction off the Death Note, ultimately leading to world governments bidding on the Death Note, ultimately getting the United States to bid $10,000,000,000,000 for it, while various law enforcement agencies are out to catch Minoru, whom Near names \"A-Kira\". During that time though, the Shinigami King is infuriated by the idea of the Note itself being for sale, and creates a new rule to the Note. After the Note is paid for by depositing the money equally into the savings account of every Japanese person 60 or below, the new rule is revealed to be that anyone involved in the buying or selling of the Death Note will be killed upon fulfillment of the deal. The US president balks at this, and secretly refuses to take ownership of the note (though mentioning he will publicly bluff about having it), and Minoru dies immediately after trying to cash out his payment.",
+                          "mainCharacter": false,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "black",
+                              "height": 158,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": 17,
+                              "genre": "male",
+                              "country": "Japan",
+                              "occupation": "Student"
+                            }
+                          }
+                        },
+                        {
+                          "id": 10,
+                          "name": "Soichiro Yagami",
+                          "url": "localhost:3000/characters/10",
+                          "description": "Soichiro is a kind man with a strong sense of justice. He cares greatly for his family and the members of the Japanese Task Force. He is a serious and responsible man that gains the respect of many. He has a strong sense of duty, and even after the police stop funding the Kira investigation he continues trying to solve the case with the Task Force.",
+                          "mainCharacter": false,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "black",
+                              "height": 180,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": 47,
+                              "genre": "male",
+                              "country": "Japan",
+                              "occupation": "Detective"
+                            }
+                          }
+                        },
+                        {
+                          "id": 11,
+                          "name": "Sachiko Yagami",
+                          "url": "localhost:3000/characters/11",
+                          "description": "Sachiko Yagami is the wife of Soichiro Yagami and the mother of Light. Like her daughter Sayu, she is unaware of Light ever being Kira even after his death. She is portrayed by Michiko Godai in the live-action films.In the live-action drama, Sachiko dies during her treatment, when Light and Sayu was a kid. design 130\" /> Author Tsugumi Ohba considers both Sachiko and Sayu as the purest characters in the series stating that he could not \"sense any evil or twistedness from these two at all.\" The Yagami family is thought to be the most \"pitiful\" characters in the book by both creators with Ohba later adding that he felt sympathy for mother and daughter",
+                          "mainCharacter": false,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "brown",
+                              "height": 182,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": 48,
+                              "genre": "female",
+                              "country": "Japan",
+                              "occupation": "Mom"
+                            }
+                          }
+                        },
+                        {
+                          "id": 12,
+                          "name": "Sayu Yagami",
+                          "url": "localhost:3000/characters/12",
+                          "description": "Sayu Yagami is Light kindhearted younger sister. Like her mother she never learns of Light possession of the Death Note or his identity as Kira. In the manga and anime, after Takimura death, Mello gang kidnaps her in exchange for the Death Note possessed by the investigation team. Although being returned unharmed, Sayu falls into a state of shock, eventually becoming unresponsive to the presence of others. In the live-action films, her character is portrayed by actress Hikari Mitsushima, and since the mafia does not play a role, she is not kidnapped. In the drama series, Sayu is portrayed by Reiko Fujiwara.",
+                          "mainCharacter": false,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "brown",
+                              "height": null,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": 14,
+                              "genre": "female",
+                              "country": "Japan",
+                              "occupation": "Student"
+                            }
+                          }
+                        },
+                        {
+                          "id": 13,
+                          "name": "David Hoope",
+                          "url": "localhost:3000/characters/13",
+                          "description": "David Hoope is the President of the United States of America in the storyline. He assists in the formation of Near SPK, and provides information and funding to Mello under threats of the Death Note. He turns to Light, despite knowing that he is not the real L, who manipulates him into providing assistance and attacking Mello hideout. When the attack fails, President Hoope commits suicide to prevent Mello from writing his name and making him launch a nuclear strike. How to Read 13 states \"It is believed that Kira disposed of him.\"[64] In the second Rewrite special, the mafia plot is omitted, with Light instead blackmailing him to leak information about the SPK. Light in turn forwards this information to Takada and Mikami, and they kill the SPK. In the anime, the character was merged with that of George Sairas.",
+                          "mainCharacter": false,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "yellow",
+                              "height": null,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": null,
+                              "genre": "male",
+                              "country": "Unites States",
+                              "occupation": "President"
+                            }
+                          }
+                        },
+                        {
+                          "id": 14,
+                          "name": "Koreyoshi Kitamura",
+                          "url": "localhost:3000/characters/14",
+                          "description": "Koreyoshi Kitamura is the deputy director of the NPA and Soichiro superior. He feels weighted by Yotsuba pressure. How to Read 13 states that he \"is not a bad guy",
+                          "mainCharacter": false,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "white",
+                              "height": null,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": null,
+                              "genre": "male",
+                              "country": "Japan",
+                              "occupation": "Deputy Director"
+                            }
+                          }
+                        },
+                        {
+                          "id": 15,
+                          "name": "Kanichi Takimura",
+                          "url": "localhost:3000/characters/15",
+                          "description": "Kanichi Takimura is the head director of the NPA. He is kidnapped by Mello in order to be used as a hostage in exchange for the Death Note. He is later controlled to commit suicide by Light Yagami.",
+                          "mainCharacter": false,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "yellow",
+                              "height": null,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": null,
+                              "genre": "male",
+                              "country": "Japan",
+                              "occupation": "Kidnapped"
+                            }
+                          }
+                        },
+                        {
+                          "id": 16,
+                          "name": "Yamamoto",
+                          "url": "localhost:3000/characters/16",
+                          "description": "Yamamoto is the newest member of the NPA who only appears in the final chapter, Finale. He works as Matsuda junior, and was seen troubled by Matsuda bothering him with going to a bar. In the special one-shot chapter set three years later, he can be seen in the same room with the rest of the team, albeit not belonging to them, as noted by Matsuda. According to Tsugumi Ohba, the character was added during the continuity stage to show dirty side of Matsuda as a senior member, and there was no other specific intention to the inclusion of him.",
+                          "mainCharacter": false,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "black",
+                              "height": null,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": null,
+                              "genre": "male",
+                              "country": "Japan",
+                              "occupation": "Task Force Agent"
+                            }
+                          }
+                        },
+                        {
+                          "id": 17,
+                          "name": "Kurou Otaharada",
+                          "url": "localhost:3000/characters/17",
+                          "description": "An unemployed 42-year-old man, Kurou Otoharada is the first criminal that Light kills. Otoharada name is announced on television as he holds eight hostages in a nursery school. As this incident was reported only on local television, it helped L narrow down Kira whereabouts.",
+                          "mainCharacter": false,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "brown",
+                              "height": null,
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": 43,
+                              "genre": "male",
+                              "country": "Japan",
+                              "occupation": "Criminal"
+                            }
+                          }
+                        },
+                        {
+                          "id": 18,
+                          "name": "Takuo Shibuimaru",
+                          "url": "localhost:3000/characters/18",
+                          "description": "Takuo Shibuimaru, nicknamed \"Shibutaku\" (シブタク, \"Cool Taku\"), is the second person that Light kills. Shibuimaru rides a motorcycle and travels with a group of bikers. After Light sees him harassing and chasing a woman (in the anime, he was about to rape the woman), Light writes his name down with a death by traffic accident. A truck slams into Shibuimaru motorcycle, killing him. It was this death that fully convinces Light that the Death Note does work. In the manga Light feels some guilt since Shibuimaru is not a criminal.",
+                          "mainCharacter": false,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "brown",
+                              "hairColor": "brown",
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": 23,
+                              "genre": "male",
+                              "country": "Japan",
+                              "occupation": "Criminal"
+                            }
+                          }
+                        },
+                        {
+                          "id": 19,
+                          "name": "Lind L. Tailor",
+                          "url": "localhost:3000/characters/19",
+                          "description": "Lind L. Tailor is a convicted criminal waiting on death row for an unspecified capital offence; this information was kept secretly away from the public. L places Tailor as his decoy on television in exchange for being pardoned by the government. The television states that the broadcast is worldwide and that Tailor statements are being translated into Japanese. After Tailor states that he is \"L\", he reads a declaration stating that Kira is evil. Light, in a rage, kills Tailor with a heart attack. The real L announces that Tailor was a decoy, a criminal on death row, and discovers that Kira cannot kill the real L without having seen his face, and that Kira is in Kanto, as that was the only area that the appearance was actually broadcast in.",
+                          "mainCharacter": false,
+                          "infos": {
+                            "physics": {
+                              "eyeColor": "black",
+                              "hairColor": "black",
+                              "specie": "Human"
+                            },
+                            "personals": {
+                              "age": null,
+                              "country": "United States",
+                              "occupation": "Criminal"
+                            }
+                          }
+                        }
+                      ]
+                    },
+              "properties":{
+                  "count": {
+                      "type": "integer"
+                  },
+                  "results":{
+                      "type": "array"
+                  }
+              }
+          },
+          "Organization": {
+            "type": "object",
+            "example":{
+              "id":1,
+              "name":"Armed Forces",
+              "url": "localhost:3000/organizations/1",
+              "description": "It is the main investigative group for the Kira case, and they are led by the world's greatest detective, L, who preferred to be called Ryuzaki by the investigators. It was founded after the Interpol meeting with the countries of the world and after L proved that Kira is in Japan.",
+              "members":["Ryuzaki","Light","Aizawa"]
+            }
+          },
+          "Organizations": {
+            "type":"object",
+            "example": {
+              "count": 1,
+              "results": [
+                {
+                  "_id": "6372ad563702238cf030fc1b",
+                  "name": "Armed Force",
+                  "url": "http://localhost:3000/organizations/0",
+                  "description": "It is the main investigative group for the Kira case, and they are led by the world's greatest detective, L, who preferred to be called Ryuzaki by the investigators. It was founded after the Interpol meeting with the countries of the world and after L proved that Kira is in Japan.",
+                  "members": [
+                    "Ryuzaki",
+                    "Light",
+                    "Soichiro",
+                    "Aizawa",
+                    "Mogi",
+                    "Matsuda",
+                    "Ukita",
+                    "Watari",
+                    "Ide"
+                  ],
+                  "__v": 0
+                }
+              ]
+            }
+          }
+      }
+  }
 }

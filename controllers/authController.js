@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -16,14 +16,14 @@ const userController = {
         if(!user) return res.status(422).json({error:'User not found or the fields are invalid'});
     
         //Password Match
-        const checkPassword = bcrypt.compare(password,user.password);
+        const checkPassword = await bcrypt.compare(password,user.password);
         if(!checkPassword) return res.status(422).json({error:'The password is empty or invalid'});
     
         try {
             const secret = process.env.SECRET;
             const token = jwt.sign({
                 id:user._id
-            },secret)
+            },secret,{expiresIn:'1h'})
             res.status(200).json({message:'User successfully authenticated',token});
     
         } catch (err) {

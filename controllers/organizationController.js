@@ -5,7 +5,7 @@ const organizationsController = {
     getOrganizations : async (req, res) => {
         try {
             const organizations = await Organization.find();
-            const length = Array.from(await Organization.find()).length
+            const length = Array.from(await Organization.find()).length + 1
             res.status(200).json({count:length,results:organizations});
     
         } catch (err) {
