@@ -6,6 +6,71 @@
   },
   "version":"1.0.0",
   "paths": {
+      "/auth/register": {
+        "post": {
+          "description":"Faça seu registro na API",
+          "tags":["Rotas (endpoints)"],
+          "requestBody":{
+            "content":{
+                "application/json": {
+                    "schema":{
+                        "$ref": "#/components/schemas/AuthBodyRequest"
+                    }
+                }
+              }
+          },
+          "responses": {
+            "500":{
+                "description": "Passed data is empty or incorrect, please check and try again"
+            },
+            "201": {
+                "description": "The user has been successfully registered!",
+                "content": {
+                  "application/json":{
+                      "schema":{
+                          "$ref": "#/components/schemas/Auth"
+                      }
+                  }
+              }
+            }
+          }
+        }
+      },
+      "/auth/user": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description":"Faça seu registro na API",
+          "tags":["Rotas (endpoints)"],
+          "requestBody":{
+            "content":{
+                "application/json": {
+                    "schema":{
+                        "$ref": "#/components/schemas/AuthBodyRequestUser"
+                    }
+                }
+              }
+          },
+          "responses": {
+            "500":{
+                "description": "Your credentials are incorrect or empty, please try again"
+            },
+            "201": {
+                "description": "User successfully authenticated",
+                "content": {
+                  "application/json":{
+                      "schema":{
+                          "$ref": "#/components/schemas/Auth"
+                      }
+                  }
+              }
+            }
+          }
+        }
+      },
       "/anime":{
           "get": {
               "description":"Ao acessar essa rota, você obterá todos os dados referentes ao anime, o formato é no tipo JSON, como os exemplos abaixo:",
@@ -457,6 +522,13 @@
   },
   "components":{
       "schemas":{
+          "Auth": {
+            "type":"object",
+            "example": {
+              "email":"example1@example.com",
+              "password":"examplepass"
+            }
+          },
           "Anime":{
               "type":"object",
               "example": {
@@ -534,10 +606,110 @@
                   }
               }
           },
+          "AuthBodyRequest": {
+            "type":"object",
+            "example":{
+              "name":"example1",
+              "email":"example1@example.com",
+              "password":"examplepass",
+              "confirmPassword":"examplepass"
+            },
+            "properties": {
+              "name": {
+                "type":"string"
+              },
+              "email": {
+                "type":"string"
+              },
+              "password": {
+                  "type":"string"
+              },
+              "confirmPassword": {
+                  "type":"array"
+              }
+            }
+          },
+          "AuthBodyRequestUser": {
+            "type":"object",
+            "example":{
+              "email":"example1@example.com",
+              "password":"examplepass"
+            },
+            "properties": {
+              "email": {
+                "type":"string"
+              },
+              "password": {
+                  "type":"string"
+              }
+            }
+          },
           "AnimeBodyRequest":{
             "type":"object",
             "example":{
-              "newAnimeValue":"teste"
+              "animeName": "Death Note",
+              "description": "Death Note (stylized in all caps) is a Japanese manga series written by Tsugumi Ohba and illustrated by Takeshi Obata. The story follows Light Yagami, a teen genius who discovers a mysterious notebook: the \"Death Note\", which belonged to the shinigami Ryuk, and grants the user the supernatural ability to kill anyone whose name is written in its pages. The series centers around Light subsequent attempts to use the Death Note to carry out a worldwide massacre of individuals whom he deems immoral and to create a crime-free society, using the alias of a god-like vigilante named \"Kira\", and the subsequent efforts of an elite Japanese police task force, led by enigmatic detective L, to apprehend him. Death Note ran in Shueisha manga magazine Weekly Shōnen Jump from December 2003 to May 2006. Its 108 chapters were collected in 12 tankōbon volumes.",
+              "genres": [
+                "Mystery",
+                "Psychological thriller",
+                "Supernatural thriller"
+              ],
+              "productionInfos": {
+                "manga": {
+                  "writtenBy": "Tsugumi Ohba",
+                  "illustratedBy": "Takeshi Obata",
+                  "publishedBy": "Shueisha",
+                  "englishPublishers": [
+                    "Viz Media",
+                    "Madman Entertainment"
+                  ],
+                  "imprint": "Jump Comics",
+                  "demographic": "Shounen",
+                  "originalRun": " December 1, 2003 – May 15, 2006"
+                },
+                "novel": {
+                  "writtenBy": "Nisio Isin",
+                  "publishedBy": "Shueisha",
+                  "englishPublishers": [
+                    "Viz Media"
+                  ],
+                  "published": "August 1, 2006"
+                },
+                "anime": {
+                  "directedBy": "Tetsurō Araki",
+                  "productedBy": [
+                    "Toshio Nakatani",
+                    "Manabu Tamura",
+                    "Masao Maruyama"
+                  ],
+                  "writtenBy": "Toshiki Inoue",
+                  "musicBy": [
+                    "Yoshihisa Hirano",
+                    "Hideki Taniuchi"
+                  ],
+                  "studio": "Madhouse",
+                  "licensedBy": [
+                    "Crunchyroll",
+                    "Viz Media"
+                  ],
+                  "genre": "Shounen",
+                  "originalRun": "October 4, 2006 – June 27, 2007"
+                }
+              }
+            },
+            "properties": {
+              "animeName": {
+                "type":"string"
+              },
+              "description": {
+                "type":"string"
+              },
+              "genres": {
+                  "type":"array"
+              },
+              "productionInfos": {
+                  "type":"object"
+              }
             }
           },
           "CharacterBodyRequest":{
@@ -1089,6 +1261,13 @@
                   "__v": 0
                 }
               ]
+            }
+          },
+          "securitySchemes": {
+            "bearerAuth":{
+              "type": "http",
+              "scheme": "bearer",
+              "bearerFormat": "JWT"
             }
           }
       }
