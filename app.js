@@ -19,8 +19,8 @@ const placesRouter = require('./routes/places');
 const authRouter = require('./routes/auth');
 
 // Database
-const uri = "mongodb+srv://p0nzu:albernaz123@deathnoteapi-cluster.9x7n484.mongodb.net/deathnoteapi?retryWrites=true&w=majority";
 const mongoose = require('mongoose');
+const uri = process.env.URI;
 
 
 const swaggerOptions = {
